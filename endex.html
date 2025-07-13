@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ingreso</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(to bottom right, #4a90e2, #9013fe);
+            margin: 0;
+            color: white;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+        h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+        input {
+            margin: 10px 0;
+            padding: 15px;
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        input:focus {
+            border-color: #4a90e2;
+            outline: none;
+        }
+        button {
+            padding: 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        button:disabled {
+            background-color: #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Ingreso al Juego</h2>
+        <input type="text" id="codigo" placeholder="Código" required>
+        <input type="password" id="contrasena" placeholder="Contraseña" required>
+        <button id="botonJugar" disabled>Jugar</button>
+    </div>
+
+    <script>
+        const codigoCorrecto = "123"; // Cambia esto por tu código
+        const contrasenaCorrecta = "123"; // Cambia esto por tu contraseña
+
+        const botonJugar = document.getElementById("botonJugar");
+        
+        document.getElementById("codigo").addEventListener("input", validarIngreso);
+        document.getElementById("contrasena").addEventListener("input", validarIngreso);
+
+        function validarIngreso() {
+            const codigo = document.getElementById("codigo").value;
+            const contrasena = document.getElementById("contrasena").value;
+            botonJugar.disabled = !(codigo === codigoCorrecto && contrasena === contrasenaCorrecta);
+        }
+
+        botonJugar.addEventListener("click", function() {
+            window.location.href = "juegos.html"; // Redirige a juegos.html
+        });
+    </script>
+</body>
+</html>
