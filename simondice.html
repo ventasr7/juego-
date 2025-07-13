@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simón Dice</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+        .color {
+            width: 100px;
+            height: 100px;
+            margin: 10px;
+            display: inline-block;
+            border: 2px solid #000;
+            cursor: pointer;
+        }
+        .red { background-color: red; }
+        .green { background-color: green; }
+        .blue { background-color: blue; }
+        .yellow { background-color: yellow; }
+        #message {
+            margin-top: 20px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Simón Dice</h1>
+<div id="game">
+    <div class="color red"></div>
+    <div class="color green"></div>
+    <div class="color blue"></div>
+    <div class="color yellow"></div>
+</div>
+<div id="message"></div>
+<button id="startButton">Iniciar Juego</button>
+
+<script>
+    const colors = ['red', 'green', 'blue', 'yellow'];
+    let sequence = [];
+    let playerSequence = [];
+    let level = 0;
+
+    document.querySelectorAll('.color').forEach(color => {
+        color.addEventListener('click', () => handlePlayerClick(color.classList[1]));
+    });
+
+    document.getElementById('startButton').addEventListener('click', startGame);
+
+    function startGame() {
+        sequence = [];
+        playerSequence = [];
+        level = 0;
+        nextLevel();
+    }
+
+    function nextLevel() {
+        level++;
+        playerSequence = [];
+        const nextColor = colors[Math.floor(Math.random() * colors.length)];
+        sequence.push(nextColor);
+        showSequence();
+    }
+
+    function showSequence() {
+        let index = 0;
+        const interval = setInterval(() => {
+            if (index === sequence.length) {
+                clearInterval(interval);
+                return;
+            }
+            highlightColor(sequence[index]);
+            index++;
+        }, 1000);
+    }
+
+    function highlightColor(color) {
+        const colorDiv = document.querySelector(`.${color}`);
+        colorDiv.style.opacity = '0.5';
+        setTimeout(() => {
+            colorDiv.style.opacity = '1';
+        }, 500);
+    }
+
+    function handlePlayerClick(color) {
+        playerSequence.push(color);
+        highlightColor(color);
+        checkSequence();
+    }
+
+    function checkSequence() {
+        const lastIndex = playerSequence.length - 1;
+        if (playerSequence[lastIndex] !== sequence[lastIndex]) {
+            document.getElementById('message').innerText = '¡Perdiste! Intenta de nuevo.';
+            return;
+        }
+        if (playerSequence.length === sequence.length) {
+            document.getElementById('message').innerText = '¡Bien hecho! Pasas al siguiente nivel.';
+            setTimeout(nextLevel, 1000);
+        }
+    }
+</script>
+
+</body>
+</html>

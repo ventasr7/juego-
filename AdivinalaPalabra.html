@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adivina la Palabra</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+        #word {
+            font-size: 24px;
+            letter-spacing: 5px;
+            margin-bottom: 20px;
+        }
+        #input {
+            margin-bottom: 10px;
+        }
+        #message {
+            margin-top: 20px;
+            font-size: 20px;
+        }
+        #resetButton {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Adivina la Palabra</h1>
+<div id="word"></div>
+<input type="text" id="input" maxlength="1" placeholder="Ingresa una letra">
+<button id="guessButton">Adivinar</button>
+<div id="message"></div>
+<button id="resetButton">Jugar de Nuevo</button>
+
+<script>
+    const words = ['manzana', 'platano', 'naranja', 'cereza', 'sandia'];
+    let selectedWord;
+    let attempts = 0;
+    const maxAttempts = 6;
+    let guessedLetters = [];
+
+    function initializeGame() {
+        selectedWord = words[Math.floor(Math.random() * words.length)];
+        attempts = 0;
+        guessedLetters = [];
+        document.getElementById('word').innerText = '_ '.repeat(selectedWord.length).trim();
+        document.getElementById('message').innerText = '';
+        document.getElementById('resetButton').style.display = 'none';
+    }
+
+    function updateWordDisplay() {
+        const displayWord = selectedWord.split('').map(letter => 
+            guessedLetters.includes(letter) ? letter : '_'
+        ).join(' ');
+        document.getElementById('word').innerText = displayWord;
+    }
+
+    document.getElementById('guessButton').addEventListener('click', () => {
+        const input = document.getElementById('input').value.toLowerCase();
+        document.getElementById('input').value = '';
+
+        if (input && !guessedLetters.includes(input)) {
+            guessedLetters.push(input);
+            attempts++;
+            updateWordDisplay();
+
+            if (!selectedWord.includes(input)) {
+                document.getElementById('message').innerText = `Incorrecto. Intentos restantes: ${maxAttempts - attempts}`;
+            } else {
+                document.getElementById('message').innerText = '¡Correcto! Sigue adivinando.';
+            }
+
+            if (attempts >= maxAttempts) {
+                document.getElementById('message').innerText = `¡Perdiste! La palabra era "${selectedWord}".`;
+                document.getElementById('resetButton').style.display = 'block';
+            } else if (!document.getElementById('word').innerText.includes('_')) {
+                document.getElementById('message').innerText = '¡Ganaste! La palabra era "' + selectedWord + '".';
+                document.getElementById('resetButton').style.display = 'block';
+            }
+        }
+    });
+
+    document.getElementById('resetButton').addEventListener('click', initializeGame);
+
+    // Initialize the game on page load
+    initializeGame();
+</script>
+
+</body>
+</html>

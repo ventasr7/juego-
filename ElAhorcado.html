@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Ahorcado</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #282c34;
+            color: white;
+            margin: 0;
+        }
+        #word {
+            font-size: 24px;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+        #letters {
+            margin: 20px;
+        }
+        .letterButton {
+            padding: 10px 15px;
+            margin: 5px;
+            border: none;
+            color: white;
+            background-color: #61dafb;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        #message {
+            margin-top: 20px;
+            font-size: 20px;
+        }
+        #resetButton {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            display: none;
+            background-color: #61dafb;
+            border: none;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+
+<h1>El Ahorcado</h1>
+<div id="word"></div>
+<div id="letters"></div>
+<div id="message"></div>
+<button id="resetButton" style="display: none;">Jugar de Nuevo</button>
+
+<script>
+    const words = ['javascript', 'programacion', 'ahorcado', 'desarrollo', 'web'];
+    let selectedWord;
+    let guessedLetters;
+    let attempts;
+
+    function initializeGame() {
+        selectedWord = words[Math.floor(Math.random() * words.length)];
+        guessedLetters = [];
+        attempts = 6;
+        document.getElementById('message').innerText = '';
+        document.getElementById('resetButton').style.display = 'none';
+        displayWord();
+        createLetterButtons();
+    }
+
+    function displayWord() {
+        const wordDisplay = selectedWord.split('').map(letter => (guessedLetters.includes(letter) ? letter : '_')).join(' ');
+        document.getElementById('word').innerText = wordDisplay;
+    }
+
+    function createLetterButtons() {
+        const lettersDiv = document.getElementById('letters');
+        lettersDiv.innerHTML = '';
+        for (let i = 97; i <= 122; i++) {
+            const button = document.createElement('button');
+            button.innerText = String.fromCharCode(i);
+            button.classList.add('letterButton');
+            button.addEventListener('click', () => checkLetter(button.innerText));
+            lettersDiv.appendChild(button);
+        }
+    }
+
+    function checkLetter(letter) {
+        if (!guessedLetters.includes(letter)) {
+            guessedLetters.push(letter);
+            if (!selectedWord.includes(letter)) {
+                attempts--;
+            }
+            displayWord();
+            checkGameOver();
+        }
+    }
+
+    function checkGameOver() {
+        if (attempts === 0) {
+            document.getElementById('message').innerText = `¡Perdiste! La palabra era: ${selectedWord}`;
+            document.getElementById('resetButton').style.display = 'block';
+        } else if (selectedWord.split('').every(letter => guessedLetters.includes(letter))) {
+            document.getElementById('message').innerText = '¡Ganaste! Adivinaste la palabra.';
+            document.getElementById('resetButton').style.display = 'block';
+        }
+    }
+
+    document.getElementById('resetButton').addEventListener('click', initializeGame);
+
+    // Initialize the game on page load
+    initializeGame();
+</script>
+
+</body>
+</html>

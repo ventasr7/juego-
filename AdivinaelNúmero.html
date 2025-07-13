@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Juego de Adivinanza de Números</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+        #guessInput {
+            width: 50px;
+            padding: 5px;
+            font-size: 18px;
+        }
+        #submitButton {
+            padding: 5px 10px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        #message {
+            margin-top: 20px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Adivina el Número</h1>
+<p>Estoy pensando en un número entre 1 y 100.</p>
+<input type="number" id="guessInput" min="1" max="100">
+<button id="submitButton">Adivinar</button>
+<div id="message"></div>
+<div id="attempts"></div>
+
+<script>
+    let randomNumber = Math.floor(Math.random() * 100) + 1;
+    let attempts = 0;
+
+    document.getElementById('submitButton').addEventListener('click', function() {
+        const userGuess = parseInt(document.getElementById('guessInput').value);
+        attempts++;
+        
+        if (userGuess < 1 || userGuess > 100) {
+            document.getElementById('message').innerText = 'Por favor, ingresa un número entre 1 y 100.';
+        } else if (userGuess < randomNumber) {
+            document.getElementById('message').innerText = 'Demasiado bajo. ¡Inténtalo de nuevo!';
+        } else if (userGuess > randomNumber) {
+            document.getElementById('message').innerText = 'Demasiado alto. ¡Inténtalo de nuevo!';
+        } else {
+            document.getElementById('message').innerText = `¡Correcto! Adivinaste el número en ${attempts} intentos.`;
+            resetGame();
+        }
+
+        document.getElementById('attempts').innerText = `Intentos: ${attempts}`;
+    });
+
+    function resetGame() {
+        randomNumber = Math.floor(Math.random() * 100) + 1;
+        attempts = 0;
+        document.getElementById('guessInput').value = '';
+        document.getElementById('attempts').innerText = '';
+    }
+</script>
+
+</body>
+</html>

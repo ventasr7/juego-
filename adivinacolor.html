@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adivina el Color</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #282c34; /* Fondo oscuro */
+            color: white; /* Texto blanco */
+            margin: 0;
+        }
+        #colorButtons {
+            margin: 20px;
+        }
+        .colorButton {
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        #message {
+            margin-top: 20px;
+            font-size: 20px;
+        }
+        #resetButton {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            display: none;
+            background-color: #61dafb; /* Color del botón de reinicio */
+            border: none;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Adivina el Color</h1>
+<div id="colorButtons"></div>
+<div id="message"></div>
+<button id="resetButton" style="display: none;">Jugar de Nuevo</button>
+
+<script>
+    const colors = ['rojo', 'verde', 'azul', 'amarillo', 'naranja', 'morado'];
+    let selectedColor;
+
+    function initializeGame() {
+        selectedColor = colors[Math.floor(Math.random() * colors.length)];
+        document.getElementById('message').innerText = '';
+        document.getElementById('resetButton').style.display = 'none';
+        createColorButtons();
+    }
+
+    function createColorButtons() {
+        const colorButtonsDiv = document.getElementById('colorButtons');
+        colorButtonsDiv.innerHTML = '';
+        colors.forEach(color => {
+            const button = document.createElement('button');
+            button.innerText = color.charAt(0).toUpperCase() + color.slice(1);
+            button.classList.add('colorButton');
+            button.style.backgroundColor = color;
+            button.addEventListener('click', () => checkColor(color));
+            colorButtonsDiv.appendChild(button);
+        });
+    }
+
+    function checkColor(color) {
+        if (color === selectedColor) {
+            document.getElementById('message').innerText = '¡Correcto! Has adivinado el color.';
+            document.getElementById('resetButton').style.display = 'block';
+        } else {
+            document.getElementById('message').innerText = 'Incorrecto. Intenta de nuevo.';
+        }
+    }
+
+    document.getElementById('resetButton').addEventListener('click', initializeGame);
+
+    // Initialize the game on page load
+    initializeGame();
+</script>
+
+</body>
+</html>

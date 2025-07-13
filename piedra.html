@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piedra, Papel o Tijera</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            margin: 5px;
+            cursor: pointer;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Piedra, Papel o Tijera</h1>
+<button id="rock">Piedra</button>
+<button id="paper">Papel</button>
+<button id="scissors">Tijera</button>
+<div id="result"></div>
+
+<script>
+    const choices = ['Piedra', 'Papel', 'Tijera'];
+    const resultDisplay = document.getElementById('result');
+
+    function playGame(userChoice) {
+        const computerChoice = choices[Math.floor(Math.random() * choices.length)];
+        let result;
+
+        if (userChoice === computerChoice) {
+            result = '¡Es un empate!';
+        } else if (
+            (userChoice === 'Piedra' && computerChoice === 'Tijera') ||
+            (userChoice === 'Papel' && computerChoice === 'Piedra') ||
+            (userChoice === 'Tijera' && computerChoice === 'Papel')
+        ) {
+            result = '¡Ganaste!';
+        } else {
+            result = '¡Perdiste!';
+        }
+
+        resultDisplay.innerText = `Elegiste: ${userChoice}. Computadora eligió: ${computerChoice}. ${result}`;
+    }
+
+    document.getElementById('rock').addEventListener('click', () => playGame('Piedra'));
+    document.getElementById('paper').addEventListener('click', () => playGame('Papel'));
+    document.getElementById('scissors').addEventListener('click', () => playGame('Tijera'));
+</script>
+
+</body>
+</html>

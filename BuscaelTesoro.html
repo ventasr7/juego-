@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Busca el Tesoro</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #e0e0e0;
+            margin: 0;
+        }
+        #board {
+            display: grid;
+            grid-template-columns: repeat(5, 50px);
+            grid-gap: 5px;
+            margin-bottom: 20px;
+        }
+        .cell {
+            width: 50px;
+            height: 50px;
+            background-color: #4CAF50;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+        .found {
+            background-color: #ffd700;
+        }
+        #message {
+            margin-top: 20px;
+            font-size: 20px;
+        }
+        #treasure {
+            font-size: 50px;
+            display: none;
+        }
+        #resetButton {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Busca el Tesoro</h1>
+<div id="board"></div>
+<div id="message"></div>
+<div id="treasure">🏆</div>
+<button id="resetButton" style="display: none;">Jugar de Nuevo</button>
+
+<script>
+    let treasureLocation;
+    let attempts = 0;
+    const maxAttempts = 5;
+
+    function initializeGame() {
+        board.innerHTML = '';
+        treasureLocation = Math.floor(Math.random() * 25);
+        attempts = 0;
+        message.innerText = '';
+        treasure.style.display = 'none';
+        resetButton.style.display = 'none';
+
+        for (let i = 0; i < 25; i++) {
+            const cell = document.createElement('div');
+            cell.classList.add('cell');
+            cell.dataset.index = i;
+            cell.addEventListener('click', () => chooseCell(i));
+            board.appendChild(cell);
+        }
+    }
+
+    function chooseCell(index) {
+        if (attempts >= maxAttempts) {
+            return;
+        }
+
+        attempts++;
+        const cell = document.querySelector(`.cell[data-index="${index}"]`);
+
+        if (index === treasureLocation) {
+            cell.classList.add('found');
+            message.innerText = '¡Encontraste el tesoro!';
+            treasure.style.display = 'block';
+            resetButton.style.display = 'block';
+        } else {
+            cell.classList.add('found');
+            message.innerText = 'No hay tesoro aquí. Intentos restantes: ' + (maxAttempts - attempts);
+        }
+
+        if (attempts >= maxAttempts && index !== treasureLocation) {
+            message.innerText += ' El tesoro estaba en la celda ' + (treasureLocation + 1);
+            resetButton.style.display = 'block';
+        }
+    }
+
+    document.getElementById('resetButton').addEventListener('click', initializeGame);
+
+    // Initialize the game on page load
+    initializeGame();
+</script>
+
+</body>
+</html>
