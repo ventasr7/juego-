@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seleccion de Juegos</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f4f8;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.5em;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        .juegos-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+        .juego {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+        .juego img {
+            max-width: 100%;
+            border-bottom: 4px solid #28a745;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+        }
+        .juego h2 {
+            font-size: 1.8em;
+            color: #2c3e50;
+            margin: 15px 0;
+        }
+        .jugar-btn {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 20px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-bottom: 15px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .jugar-btn:hover {
+            background-color: #218838;
+            transform: scale(1.05);
+        }
+        .juego:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+        }
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2em;
+            }
+            .jugar-btn {
+                width: 100%;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Selecciona un Juego</h1>
+    <div class="juegos-container">
+        <div class="juego">
+           
+            <h2>Adivina el Color</h2>
+            <button class="jugar-btn" onclick="location.href='adivinacolor.html'">Jugar</button>
+        </div>
+        <div class="juego">
+            
+            <h2>Adivina la Palabra</h2>
+            <button class="jugar-btn" onclick="location.href='AdivinalaPalabra.html'">Jugar</button>
+        </div>
+        <div class="juego">
+         
+            <h2>Busca el Tesoro</h2>
+            <button class="jugar-btn" onclick="location.href='BuscaelTesoro.html'">Jugar</button>
+        </div>
+        <div class="juego">
+            
+            <h2>Contador de Clicks</h2>
+            <button class="jugar-btn" onclick="location.href='ContadordeClicks.html'">Jugar</button>
+        </div>
+        <div class="juego">
+            
+            <h2>Cultura General</h2>
+            <button class="jugar-btn" onclick="location.href='cultura.html'">Jugar</button>
+        </div>
+        <div class="juego">
+            
+            <h2>Adivina el Número</h2>
+            <button class="jugar-btn" onclick="location.href='AdivinaelNúmero.html'">Jugar</button>
+        </div>
+        <div class="juego">
+            
+            <h2>El Ahorcado</h2>
+            <button class="jugar-btn" onclick="location.href='ElAhorcado.html'">Jugar</button>
+        </div>
+        <div class="juego">
+            
+            <h2>Juego de Memoria</h2>
+            <button class="jugar-btn" onclick="location.href='JuegodeMemoria.html'">Jugar</button>
+        </div>
+        <div class="juego">
+           
+            <h2>Piedra, Papel o Tijera</h2>
+            <button class="jugar-btn" onclick="location.href='piedra.html'">Jugar</button>
+        </div>
+        <div class="juego">
+            
+            <h2>Simon Dice</h2>
+            <button class="jugar-btn" onclick="location.href='simondice.html'">Jugar</button>
+        </div>
+        <div class="juego">
+            <h2>Suma</h2>
+            <button class="jugar-btn" onclick="location.href='suma.html'">Jugar</button>
+        </div>
+    </div>
+</body>
+</html>
